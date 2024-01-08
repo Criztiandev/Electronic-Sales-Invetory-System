@@ -3,23 +3,30 @@ import Container from "@/components/Container";
 import Field from "@/components/Field";
 import FlexStack from "@/components/FlexStack";
 import Form from "@/components/Form";
-
 import Table from "@/components/Table";
 import categoryConfig from "@/views/admin/config/tables/category.config";
+import { DateRangePicker } from "@/views/admin/interface/form";
 import { Purchase } from "@/views/admin/interface/model";
+import { DateRangePickerSchema } from "@/views/admin/validation/filter.validation";
 
 const PaymentTable = () => {
   const { name, base, columns } = categoryConfig.purchaseTable;
+
+  const handleSubmit = (values: DateRangePicker) => {
+    console.log(values);
+  };
 
   return (
     <Container>
       <Table>
         {/* Table Header */}
         <Table.Header title="Payment Record" current={`/${base}`}>
-          <Form>
+          <Form<DateRangePicker>
+            onSubmit={handleSubmit}
+            validation={DateRangePickerSchema}>
             <FlexStack dir="row">
               <Field type="date" name="startDate" placeholder="Date start" />
-              <Field type="date" name="startDate" placeholder="Date start" />
+              <Field type="date" name="endDate" placeholder="Date start" />
               <Button title="Filter" />
             </FlexStack>
           </Form>

@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 
-const PurchaseScreen = () => {
+const SalesScreen = () => {
   return (
-    <section className="px-[32px] py-8">
+    <section className="px-[32px] py-8 overflow-x-hidden">
       <Outlet />
     </section>
   );
 };
 
-export default PurchaseScreen;
+export default SalesScreen;
