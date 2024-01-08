@@ -1,0 +1,28 @@
+{
+  "name": "Ecommerce-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client && npm install",
+    "install": "concurrently \"npm run install:server\" \"npm run install:client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Criztiandev/Boilerplate-MERN-TS-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Criztiandev/Boilerplate-MERN-TS-/issues"
+  },
+  "homepage": "https://github.com/Criztiandev/Boilerplate-MERN-TS-#readme",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

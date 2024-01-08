@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": false,
+    "target": "ES6",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noEmit": true,
+    "types": ["dotenv"],
+    "allowImportingTsExtensions": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "rootDir": "src",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["src/*"]
+    }
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": ["src/**/*"]
+}
