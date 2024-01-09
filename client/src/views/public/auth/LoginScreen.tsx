@@ -11,10 +11,6 @@ import Button from "@/components/Button";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/service/store/slice/auth.slice";
 
-const cookies = document.cookie;
-
-console.log(cookies);
-
 const LoginScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

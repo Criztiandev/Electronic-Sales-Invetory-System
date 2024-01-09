@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const PurchaseScreen = () => {
+const ExprensesScreen = () => {
   return (
     <section className="px-[32px] py-8">
       <Outlet />
@@ -8,4 +8,4 @@ const PurchaseScreen = () => {
   );
 };
 
-export default PurchaseScreen;
+export default ExprensesScreen;

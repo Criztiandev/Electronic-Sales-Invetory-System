@@ -12,8 +12,14 @@ export default {
   fetchAllUser: async () =>
     await apiUtils.privateAxios().get(`/${BASE_ROUTE}?size=10&index=0`),
 
-  fetchUserById: async (UID: string) =>
-    await apiUtils.privateAxios().get(`/${BASE_ROUTE}/${UID}`),
+  fetchUserById: async (UID: string) => {
+    try {
+      const res = await apiUtils.privateAxios().get(`/${BASE_ROUTE}/${UID}`);
+      return res.data;
+    } catch (e) {
+      return e;
+    }
+  },
 
   updateUserById: async (UID: string, payload: any) =>
     await apiUtils

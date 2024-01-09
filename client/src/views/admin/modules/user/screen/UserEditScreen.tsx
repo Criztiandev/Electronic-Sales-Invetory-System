@@ -10,7 +10,6 @@ import Select from "@/components/Select";
 import queryUtils from "@/utils/query.utils";
 import usersApi from "@/service/api/users.api";
 import { useLocation, useNavigate } from "react-router-dom";
-import LoadingScreen from "@/views/general/LoadingScreen";
 import { ToastContent, toast } from "react-toastify";
 import { PreferedUserDetailsSchema } from "@/service/validation/user.validation";
 import FileInput from "@/components/FileInput";
@@ -18,6 +17,7 @@ import Avatar from "@/components/Avatar";
 import { useQuery } from "@tanstack/react-query";
 import fileApi from "@/service/api/file.api";
 import Container from "@/components/Container";
+import LoadingScreen from "@/views/utils/LoadingScreen";
 
 interface Props {
   base: string;
@@ -133,7 +133,6 @@ const UserEditScreen = ({ base }: Props) => {
           <GridStack columns={2} className="border-b border-gray-400 my-8 pb-8">
             <Container>
               <h2 className="text-xl font-semibold">Details</h2>
-              <p className="my-4 text-base">dfsdfsdfsdfsdfsdfsdfsf</p>
             </Container>
 
             <FlexStack className="py-4">
@@ -167,7 +166,6 @@ const UserEditScreen = ({ base }: Props) => {
           <GridStack columns={2} className="border-b border-gray-200 pb-8">
             <Container>
               <h2 className="text-xl font-semibold">Actions</h2>
-              <p className="my-4 text-base">dfsdfsdfsdfsdfsdfsdfsf</p>
             </Container>
             <FlexStack
               gap={8}

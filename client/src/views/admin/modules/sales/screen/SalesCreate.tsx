@@ -1,5 +1,5 @@
-const PurchaseCreate = () => {
+const SalesCreate = () => {
   return <div>PurchaseCreate</div>;
 };
 
-export default PurchaseCreate;
+export default SalesCreate;

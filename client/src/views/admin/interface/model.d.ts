@@ -1,19 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Products {
   _id?: string;
-  image: string;
-  category: string;
+  productImg?: any;
   code: string;
   name: string;
+  category: string;
   cost: string;
   price: string;
-  quntity: string;
+  quantity: string;
 }
 
 export interface ProductCategory {
   _id?: string;
   code: string;
   name: string;
-  count: string;
+  count?: string;
 }
 
 export interface StocksManagement {

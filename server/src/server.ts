@@ -12,6 +12,7 @@ import accountRoute from "./modules/account/account.routes.ts";
 // admin routes
 import userRoute from "./modules/users/user.routes.ts";
 import productRoute from "./modules/products/product.routes.ts";
+import productCategoryRoute from "./modules/products/category/productCategory.routes.ts";
 
 // user routes
 import orderRoute from "./modules/order/order.routes.ts";
@@ -49,6 +50,12 @@ app.use("/api/order", [authenticateUser, requireUser], orderRoute);
 // Admin Routes
 app.use("/api/users", [authenticateUser, requireAdmin], userRoute);
 app.use("/api/products", [authenticateUser, requireAdmin], productRoute);
+app.use(
+  "/api/products-category",
+  [authenticateUser, requireAdmin],
+  productCategoryRoute
+);
+
 app.use("/api/account", [authenticateUser, requireAdmin], accountRoute);
 app.use(notFound);
 app.use(errorHandler);

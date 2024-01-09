@@ -28,6 +28,7 @@ const tableSlice = createSlice({
     setColumnFilter: tableReducer.handleColumnFilter,
     setRowSelect: tableReducer.handleRowSelect,
     setPagination: tableReducer.handlePagination,
+    clearPayload: tableReducer.handleClearPayload,
   },
 });
 
@@ -37,5 +38,6 @@ export const {
   setColumnFilter,
   setRowSelect,
   setPagination,
+  clearPayload,
 } = tableSlice.actions;
 export default tableSlice.reducer;

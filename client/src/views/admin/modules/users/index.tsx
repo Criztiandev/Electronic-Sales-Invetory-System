@@ -1,11 +1,7 @@
-import { Outlet } from "react-router-dom";
+import Base from "@/components/Base";
 
 const UserScreen = () => {
-  return (
-    <section className="px-[32px] py-8">
-      <Outlet />
-    </section>
-  );
+  return <Base />;
 };
 
 export default UserScreen;

@@ -26,13 +26,12 @@ import SalesReturnTable from "./modules/sales/screen/SalesReturn";
 import ExprensesTable from "./modules/expenses/screen/ExprensesTable";
 import ExprensesCreate from "./modules/expenses/screen/ExprensesCreate";
 import ExprensesScreen from "./modules/expenses";
-import UserTable from "./modules/users/screen/UserTable";
-import UserCreate from "./modules/users/screen/UserCreate";
-import UserUpdate from "./modules/users/screen/UserUpdate";
+
 import PurchaseReturnTable from "./modules/purchase/screen/PurchaseReturnTable";
 import ProfitLoss from "./modules/reports/screen/ProfitLoss";
 import PaymentTable from "./modules/reports/screen/Payment";
 import TOS from "./modules/reports/screen/TOS";
+import userRoutes from "./modules/users/user.routes";
 
 const adminRoutes = createBrowserRouter([
   { path: "*", element: <NotFound /> },
@@ -125,16 +124,7 @@ const adminRoutes = createBrowserRouter([
           },
         ],
       },
-
-      {
-        path: "/users",
-        element: <ExprensesScreen />,
-        children: [
-          { path: "/users", element: <UserTable /> },
-          { path: "/users/create", element: <UserCreate /> },
-          { path: "/users/edit/:id", element: <UserUpdate /> },
-        ],
-      },
+      userRoutes,
     ],
   },
 ]);

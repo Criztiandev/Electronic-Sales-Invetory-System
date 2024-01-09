@@ -12,7 +12,6 @@ const App = () => {
     return <RouterProvider router={publicRoutes} />;
   }
 
-  console.log(role === "admin");
   const protectedRoutes = role === "admin" ? adminRoutes : userRootRoute;
 
   return <RouterProvider router={protectedRoutes} />;

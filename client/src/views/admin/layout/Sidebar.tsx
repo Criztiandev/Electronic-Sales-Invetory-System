@@ -16,14 +16,14 @@ const Sidebar = () => {
 
         <ul className="menu my-8">
           {MainLinks.map(({ path, title, isDropdown, dropdown }: LinkProps) => (
-            <>
+            <span key={title}>
               {isDropdown ? (
                 <li className="">
                   <details>
                     <summary>{title}</summary>
                     <ul>
                       {dropdown?.map(({ title, path }) => (
-                        <li>
+                        <li key={title}>
                           <Link to={path}>{title}</Link>
                         </li>
                       ))}
@@ -35,7 +35,7 @@ const Sidebar = () => {
                   <Link to={path}>{title}</Link>
                 </li>
               )}
-            </>
+            </span>
           ))}
         </ul>
       </nav>
@@ -44,7 +44,7 @@ const Sidebar = () => {
         <ul className="menu ">
           {FooterLinks.map(
             ({ path, title, isDropdown, dropdown }: LinkProps) => (
-              <>
+              <span key={title}>
                 {isDropdown ? (
                   <li className="">
                     <details>
@@ -82,7 +82,7 @@ const Sidebar = () => {
                     <Link to={path}>{title}</Link>
                   </li>
                 )}
-              </>
+              </span>
             )
           )}
         </ul>

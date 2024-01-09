@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { User } from "@/interface/user";
 import apiUtils from "@/utils/api.utils";
 import categoryConfig from "@/views/admin/config/tables/category.config";
+import { Products } from "@/views/admin/interface/model";
 
-const { base } = categoryConfig.purchaseTable;
+const { base } = categoryConfig.productTable;
 
 export default {
-  create: async (payload: User) =>
+  create: async (payload: Products) =>
     await apiUtils
       .privateAxios({ isFile: true })
       .post(`/${base}/create`, payload),

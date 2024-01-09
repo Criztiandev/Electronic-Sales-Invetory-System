@@ -10,7 +10,9 @@ const Button = (props: Props) => {
   return (
     <button
       {...props}
-      className={`${props.className ? props.className : null} btn text-base`}>
+      className={`bg-slate-500 text-white  ${
+        props.className ? props.className : null
+      } btn text-base`}>
       {props.dir && props.icon && props.dir === "left" && (
         <i className="w-6 h-6">{props.icon}</i>
       )}

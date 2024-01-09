@@ -2,11 +2,64 @@ import tableUtils from "@/utils/table.utils";
 import { TableStructProps } from "../../interface/table";
 import {
   Expenses,
+  Products,
   Purchase,
   Quotas,
   Sales,
   SalesReturn,
+  StocksManagement,
+  StocksManagementAdjustment,
 } from "../../interface/model";
+import { User } from "@/interface/user";
+
+const productTable: TableStructProps<Products> = {
+  base: "products",
+  name: "products-table",
+  columns: tableUtils.columnGenerator<Products>({
+    invalidateKey: ["products"],
+    options: [
+      { name: "productImg", header: "Image", isFirst: true },
+      { name: "category", header: "Category" },
+      { name: "code", header: "Code", isBadge: true },
+      { name: "name", header: "Name" },
+      { name: "cost", header: "Cost" },
+      { name: "price", header: "Price" },
+      { name: "quantity", header: "Quantity" },
+      { name: "_id", header: "Action", isLast: true },
+    ],
+  }),
+};
+
+const stocksManagementTable: TableStructProps<StocksManagement> = {
+  base: "stocks",
+  name: "stocks-table",
+  columns: tableUtils.columnGenerator<StocksManagement>({
+    invalidateKey: ["stocks"],
+    options: [
+      { name: "date", header: "Date", isFirst: true },
+      { name: "products", header: "Products" },
+      { name: "reference", header: "Reference", isBadge: true },
+      { name: "_id", header: "Action", isLast: true },
+    ],
+  }),
+};
+
+const stocksManagementAdjustment: TableStructProps<StocksManagementAdjustment> =
+  {
+    base: "stocks",
+    name: "stocks-table",
+    columns: tableUtils.columnGenerator<StocksManagementAdjustment>({
+      invalidateKey: ["stocks"],
+      options: [
+        { name: "name", header: "Image", isFirst: true },
+        { name: "code", header: "Category" },
+        { name: "stock", header: "Stocks", isBadge: true },
+        { name: "quantity", header: "Quantity" },
+        { name: "type", header: "Type" },
+        { name: "_id", header: "Action", isLast: true },
+      ],
+    }),
+  };
 
 const quotasTable: TableStructProps<Quotas> = {
   base: "quotas",
@@ -114,11 +167,29 @@ const expensesTable: TableStructProps<Expenses> = {
   }),
 };
 
+const userTable: TableStructProps<User> = {
+  base: "users",
+  name: "users-table",
+  columns: tableUtils.columnGenerator<User>({
+    invalidateKey: ["users"],
+    options: [
+      { name: "userName", header: "User Name", isFirst: true },
+      { name: "email", header: "Email" },
+      { id: "role", name: "role", header: "Role", isBadge: true },
+      { name: "_id", header: "Action", isLast: true },
+    ],
+  }),
+};
+
 export default {
+  productTable,
+  stocksManagementTable,
+  stocksManagementAdjustment,
   quotasTable,
   purchaseTable,
   purchaseTableReturn,
   salesTable,
   saleReturnTable,
   expensesTable,
+  userTable,
 };

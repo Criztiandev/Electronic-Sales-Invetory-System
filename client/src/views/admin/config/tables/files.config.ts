@@ -15,13 +15,13 @@ const productTable: TableStructProps<Products> = {
   columns: tableUtils.columnGenerator<Products>({
     invalidateKey: ["products"],
     options: [
-      { name: "image", header: "Image", isFirst: true },
+      { name: "productImg", header: "Image", isFirst: true },
       { name: "category", header: "Category" },
       { name: "code", header: "Code", isBadge: true },
       { name: "name", header: "Name" },
       { name: "cost", header: "Cost" },
       { name: "price", header: "Price" },
-      { name: "quntity", header: "Quantity" },
+      { name: "quantity", header: "Quantity" },
       { name: "_id", header: "Action", isLast: true },
     ],
   }),

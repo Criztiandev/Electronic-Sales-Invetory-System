@@ -3,8 +3,9 @@ import userModel from "./user.model.ts";
 import { Request, Response } from "express";
 import { validatePaginationOptions } from "../../utils/api.utils.ts";
 import { AdminRequest } from "../../interfaces/server.js";
-import * as path from "path";
 import * as fs from "fs";
+
+import { publicFolder } from "../../utils/fs.utils.ts";
 
 export default {
   createUser: asyncHandler(async (req: AdminRequest, res: Response) => {
@@ -68,6 +69,7 @@ export default {
 
   updateUserById: asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
+    delete req.body.profileImg;
 
     if (req.file) {
       req.body.profileImg = req.file.filename;
@@ -76,14 +78,14 @@ export default {
     const _user = await userModel.findById(id).lean().select("_id profileImg");
     if (!_user) throw new Error("User doesnt exist");
 
-    const rootDir = path.resolve(process.cwd());
-    const filePath = `${rootDir}/public/images/profile/${_user.profileImg}`;
-
-    // check if the profile exist
-    const oldProfileExists = fs.existsSync(filePath);
-
-    if (oldProfileExists) {
-      fs.unlinkSync(filePath);
+    if (_user.profileImg && req.file) {
+      try {
+        const filePath = publicFolder(`images/profile/${_user.profileImg}`);
+        await fs.unlinkSync(filePath);
+      } catch (e) {
+        // create a file for backlogs
+        console.log(e);
+      }
     }
 
     const _updated = await userModel

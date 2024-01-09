@@ -61,4 +61,9 @@ export default {
     const id = action.payload.id;
     state[id] = { ...state[id], pagination: action.payload.data };
   },
+
+  handleClearPayload: (state: TableState, action: PayloadAction<string>) => {
+    const id = action.payload;
+    state[id] = { ...state[id], payload: [] };
+  },
 };

@@ -1,14 +1,25 @@
-import * as path from "path";
-import * as fs from "fs";
 import asyncHandler from "express-async-handler";
-import userModel from "../users/user.model.ts";
+import userModel from "../../users/user.model.ts";
 import { Request, Response } from "express";
-import { validatePaginationOptions } from "../../utils/api.utils.ts";
-import { AdminRequest } from "../../interfaces/server.js";
-import { productModel } from "./product.model.ts";
+import { validatePaginationOptions } from "../../../utils/api.utils.ts";
+import { AdminRequest } from "../../../interfaces/server.js";
+import { productCategoryModel } from "../product.model.ts";
 
 export default {
-  create: asyncHandler(async (req: AdminRequest, res: Response) => {}),
+  create: asyncHandler(async (req: AdminRequest, res: Response) => {
+    const credentails = await productCategoryModel
+      .findOne({ code: req.body.code })
+      .lean()
+      .select("_id");
+    if (credentails) throw new Error("Product Category already exist");
+
+    const payload = await productCategoryModel.create(req.body);
+    if (!payload) throw new Error("Something went wrong");
+
+    res.status(201).json({
+      payload: payload._id,
+    });
+  }),
 
   fetchAll: asyncHandler(async (req: Request, res: Response) => {
     const {
@@ -17,10 +28,10 @@ export default {
       filter = {},
     } = validatePaginationOptions(req.query);
 
-    const totalItems = await productModel.countDocuments({});
+    const totalItems = await productCategoryModel.countDocuments({});
     const totalPages = Math.ceil(totalItems / 10);
 
-    const payload = await productModel
+    const payload = await productCategoryModel
       .find(filter)
       .skip(size * index)
       .limit(size)
@@ -37,7 +48,7 @@ export default {
   fetchById: asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const user = await productModel.findById(id).lean().select("-__v");
+    const user = await productCategoryModel.findById(id).lean().select("-__v");
     if (!user) throw new Error("User doest exist");
 
     res.status(200).json({
@@ -48,27 +59,13 @@ export default {
   updateById: asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    if (req.file) {
-      req.body.productImg = req.file.filename;
-    }
-
-    const palyload = await productModel
+    const palyload = await productCategoryModel
       .findById(id)
       .lean()
       .select("_id profileImg");
     if (!palyload) throw new Error("User doesnt exist");
 
-    const rootDir = path.resolve(process.cwd());
-    const filePath = `${rootDir}/public/images/product/${palyload.productImg}`;
-
-    // check if the profile exist
-    const oldProfileExists = fs.existsSync(filePath);
-
-    if (oldProfileExists) {
-      fs.unlinkSync(filePath);
-    }
-
-    const _updated = await productModel
+    const _updated = await productCategoryModel
       .findByIdAndUpdate(id, req.body, {
         new: true,
       })
@@ -85,21 +82,16 @@ export default {
   deleteById: asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const payload = await productModel.findById(id).lean().select("_id");
+    const payload = await productCategoryModel
+      .findById(id)
+      .lean()
+      .select("_id");
     if (!payload) throw new Error("User doest exist");
 
     try {
-      const credentials = await productModel.deleteOne({ _id: id });
+      const credentials = await productCategoryModel.deleteOne({ _id: id });
       if (credentials.deletedCount !== 1)
         throw new Error("Document not found or not deleted.");
-
-      // delete the profile using the fs module
-      const rootDir = path.resolve(process.cwd());
-      const filePath = `${rootDir}/public/images/product/${payload?.productImg}`;
-
-      // check if the productImg exist
-      const oldProfileExists = fs.existsSync(filePath);
-      if (oldProfileExists) fs.unlinkSync(filePath);
 
       res.status(200).json({
         payload: payload?._id,

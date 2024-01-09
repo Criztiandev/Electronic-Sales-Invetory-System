@@ -29,7 +29,7 @@ const Select = (props: Props) => {
 
   return (
     <label className="relative flex flex-col gap-2 w-full">
-      <Heading level={3} className="font-semibold">
+      <Heading level={3} className="text-[24px]">
         {props.title}
       </Heading>
 

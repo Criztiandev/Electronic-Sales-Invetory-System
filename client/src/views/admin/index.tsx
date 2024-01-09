@@ -3,7 +3,6 @@ import Topbar from "./layout/Topbar";
 import { Outlet } from "react-router-dom";
 
 const AdminEntryPoint = () => {
-  console.log("hi");
   return (
     <div className="h-screen flex overflow-y-auto">
       <Sidebar />

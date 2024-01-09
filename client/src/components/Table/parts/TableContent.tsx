@@ -3,7 +3,7 @@
 import Container from "@/components/Container";
 import { TableProps } from "@/interface/component";
 import { RootReducer } from "@/service/store";
-import { setRowSelect } from "@/service/store/slice/table.slice";
+import { clearPayload, setRowSelect } from "@/service/store/slice/table.slice";
 import {
   SortingState,
   useReactTable,
@@ -21,7 +21,6 @@ import SortingIndicator from "./SortingIndicator";
 import TablePagination from "./TablePagination";
 import GridStack from "@/components/GridStack";
 import CheckBox from "@/components/Checkbox";
-import tableConfig from "@/config/table.config";
 
 const Content = <T,>({ columns, ...props }: TableProps<T>) => {
   const [payload, setPayload] = useState<Array<T>>([]);
@@ -29,9 +28,10 @@ const Content = <T,>({ columns, ...props }: TableProps<T>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnsFilter] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
-  const [pagination, setPagination] = useState<PaginationState>(
-    tableConfig.general.pagination
-  );
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   const dispatch = useDispatch();
   const selection = useSelector((state: RootReducer) => state.table[props.id]);
@@ -40,6 +40,13 @@ const Content = <T,>({ columns, ...props }: TableProps<T>) => {
   const _columns: ColumnDef<T, any>[] = useMemo(() => columns, [columns]);
 
   const repeat: number = _columns.length;
+
+  // remove the payload if the user doesnt render the table
+  useEffect(() => {
+    return () => {
+      dispatch(clearPayload(props.id));
+    };
+  }, []);
 
   useEffect(() => {
     if (rowSelection) {
@@ -101,7 +108,6 @@ const Content = <T,>({ columns, ...props }: TableProps<T>) => {
     return () => {
       setGlobalFilter("");
       setColumnsFilter([]);
-      setPagination(tableConfig.general.pagination);
     };
   }, [
     selection?.payload,
@@ -117,7 +123,7 @@ const Content = <T,>({ columns, ...props }: TableProps<T>) => {
           props.className ? props.className : null
         }`}
         style={{
-          height: "calc(100vh - 280px)",
+          height: "calc(100vh - 300px)",
         }}>
         {memoizedData.length > 0 ? (
           <>
@@ -133,8 +139,7 @@ const Content = <T,>({ columns, ...props }: TableProps<T>) => {
                     <Container
                       key={header.id}
                       style={{
-                        width:
-                          repeat > 5 ? tableConfig.general.cellWidth : "auto",
+                        width: repeat > 5 ? "250px" : "auto",
                       }}>
                       {header.isPlaceholder ? null : (
                         <div className="flex gap-4 items-center">
@@ -188,8 +193,7 @@ const Content = <T,>({ columns, ...props }: TableProps<T>) => {
                       key={cell.id}
                       className=""
                       style={{
-                        width:
-                          repeat > 5 ? tableConfig.general.cellWidth : "auto",
+                        width: repeat > 5 ? "250px" : "auto",
                       }}>
                       {flexRender(
                         cell.column.columnDef.cell,
