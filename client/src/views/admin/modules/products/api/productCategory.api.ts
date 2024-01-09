@@ -9,8 +9,14 @@ export default {
     return await apiUtils.privateAxios().post(`/${base}/create`, payload);
   },
 
-  fetchAll: async () =>
-    await apiUtils.privateAxios().get(`/${base}?size=10&index=0`),
+  fetchAll: async () => {
+    try {
+      const res = await apiUtils.privateAxios().get(`/${base}`);
+      return res.data;
+    } catch (e) {
+      return e;
+    }
+  },
 
   fetchById: async (UID: string) =>
     await apiUtils.privateAxios().get(`/${base}/${UID}`),
@@ -25,6 +31,7 @@ export default {
     if (id === currentId) {
       throw new Error("You cant Perform this Action");
     }
+
     return await apiUtils.privateAxios().delete(`/${base}/${id}`);
   },
 

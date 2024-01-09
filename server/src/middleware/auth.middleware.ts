@@ -23,7 +23,6 @@ export default {
 
   requireAdmin: asyncHandler(
     async (req: AdminRequest, res: Response, next: NextFunction) => {
-      console.log(req.admin);
       if (!req.admin) {
         res.status(401);
         throw new Error("Unauthorized, Your role is not Admin");

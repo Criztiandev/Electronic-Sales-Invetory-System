@@ -7,7 +7,7 @@ router.post("/create", productCategoryController.create);
 router.get("/", productCategoryController.fetchAll);
 router.get("/:id", productCategoryController.fetchById);
 router.put("/:id", productCategoryController.updateById);
-router.delete("/:id");
+router.delete("/:id", productCategoryController.deleteById);
 router.post("/batch", productCategoryController.deleteByBatch);
 
 export default router;

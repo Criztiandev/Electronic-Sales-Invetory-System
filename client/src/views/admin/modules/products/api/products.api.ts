@@ -1,21 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import apiUtils from "@/utils/api.utils";
-import categoryConfig from "@/views/admin/config/tables/category.config";
 import { Products } from "@/views/admin/interface/model";
 
-const { base } = categoryConfig.productTable;
-
+const base = "products";
 export default {
   create: async (payload: Products) =>
     await apiUtils
       .privateAxios({ isFile: true })
       .post(`/${base}/create`, payload),
 
-  fetchAll: async () =>
-    await apiUtils.privateAxios().get(`/${base}?size=10&index=0`),
+  fetchAll: async () => {
+    try {
+      const res = await apiUtils.privateAxios().get(`/${base}`);
+      return res.data;
+    } catch (e) {
+      return e;
+    }
+  },
 
-  fetchById: async (UID: string) =>
-    await apiUtils.privateAxios().get(`/${base}/${UID}`),
+  fetchById: async (UID: string) => {
+    try {
+      const res = await apiUtils.privateAxios().get(`/${base}/${UID}`);
+      return res.data;
+    } catch (e) {
+      return e;
+    }
+  },
 
   updateById: async (UID: string, payload: any) =>
     await apiUtils

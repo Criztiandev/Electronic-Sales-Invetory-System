@@ -19,6 +19,7 @@ export interface ActionProps<T> {
   id: string | number;
   payload: CellContext<T, any>;
   invalidateKey: QueryKey;
+  configFn: any;
 }
 
 export interface ColumnOption<T> {
@@ -28,6 +29,9 @@ export interface ColumnOption<T> {
   isBadge?: boolean;
   isFirst?: boolean;
   isLast?: boolean;
+  isDate?: boolean;
+  hasImage?: boolean;
+  path?: string;
 }
 
 export interface BreadCrumbsItems {

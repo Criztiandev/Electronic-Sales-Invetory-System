@@ -9,8 +9,9 @@ export default {
       .privateAxios({ isFile: true })
       .post(`/${BASE_ROUTE}/create`, payload),
 
-  fetchAllUser: async () =>
-    await apiUtils.privateAxios().get(`/${BASE_ROUTE}?size=10&index=0`),
+  fetchAllUser: async () => {
+    return await apiUtils.privateAxios().get(`/${BASE_ROUTE}?size=10&index=0`);
+  },
 
   fetchUserById: async (UID: string) => {
     try {

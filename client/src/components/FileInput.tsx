@@ -7,7 +7,7 @@ import Heading from "./Heading";
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   title?: string;
-  default?: string | number | File;
+  default?: any;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -31,6 +31,7 @@ const FileInput = (props: Props) => {
       )}
 
       <input
+        {...props}
         {...register(props.name)} // Use register to register the input
         type="file"
         className={`file-input file-input-bordered ${

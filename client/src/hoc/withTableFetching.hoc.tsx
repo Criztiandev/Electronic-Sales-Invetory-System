@@ -66,8 +66,8 @@ const withTableFetching = (
     }
 
     if (query.isSuccess) {
-      const { data: res } = query.data;
-      dispatch(setTableData({ id: config.name, data: res.payload }));
+      const { payload } = query.data;
+      dispatch(setTableData({ id: config.name, data: payload }));
     }
 
     return <Component {...props} {...config} />;

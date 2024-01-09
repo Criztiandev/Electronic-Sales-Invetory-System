@@ -7,6 +7,7 @@ import Badge from "@/components/Badge";
 import { QueryKey } from "@tanstack/react-query";
 
 interface Props<T> {
+  configFn: any;
   invalidateKey: QueryKey;
   options: ColumnOption<T>[];
 }
@@ -27,6 +28,7 @@ export default {
             <Table.Action<T>
               id={info.cell.id}
               payload={info}
+              configFn={props.configFn}
               invalidateKey={props.invalidateKey}
             />
           ),
@@ -47,7 +49,10 @@ export default {
                   onChange: info.row.getToggleSelectedHandler(),
                 }}
               />
-              <Table.FirstCell<T> data={info} />
+              <Table.FirstCell<T>
+                data={info}
+                folder={(items.hasImage && items.path) || "profile"}
+              />
             </div>
           ),
         });
@@ -59,6 +64,17 @@ export default {
           header: () => items.header,
           cell: (info) => (
             <Badge className="p-4 capitalize">{info.getValue()}</Badge>
+          ),
+        });
+      }
+
+      if (items.isDate) {
+        return columnHelper.accessor((row: any) => row[items.name], {
+          id: items.name as string,
+          header: () => items.header,
+          cell: (info) => (
+            // mongoose convert to date
+            <div>{new Date(info.getValue()).toLocaleDateString()}</div>
           ),
         });
       }

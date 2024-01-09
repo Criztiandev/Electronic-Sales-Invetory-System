@@ -15,6 +15,7 @@ interface Props {
   option: Array<Options>;
   className?: string;
   default?: string | number;
+  disabled?: boolean;
 }
 
 const Select = (props: Props) => {

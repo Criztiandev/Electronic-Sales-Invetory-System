@@ -5,9 +5,9 @@ export interface Products {
   code: string;
   name: string;
   category: string;
-  cost: string;
-  price: string;
-  quantity: string;
+  cost: any;
+  price: any;
+  quantity: any;
 }
 
 export interface ProductCategory {
@@ -15,6 +15,7 @@ export interface ProductCategory {
   code: string;
   name: string;
   count?: string;
+  createdAt?: string;
 }
 
 export interface StocksManagement {

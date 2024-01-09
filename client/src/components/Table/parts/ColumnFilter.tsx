@@ -16,6 +16,7 @@ interface Props {
   columnTitle: string;
   options: Array<Options>;
   children?: ReactNode;
+  disable?: boolean;
 }
 
 const ColumnFilter = (props: Props) => {
@@ -64,15 +65,21 @@ const ColumnFilter = (props: Props) => {
       <Dropdown className="dropdown-end">
         <Dropdown.Button>{title ? title : props.title}</Dropdown.Button>
         <Dropdown.Content className="mt-3">
-          {props.options?.map((items) => (
-            <li
-              ref={itemRef}
-              key={items.title}
-              onClick={handleColumnFilter}
-              className="cursor-pointer btn btn-ghost items-start text-base">
-              {items.title}
-            </li>
-          ))}
+          {props?.disable ? (
+            <div>Loading</div>
+          ) : (
+            <>
+              {props.options?.map((items) => (
+                <li
+                  ref={itemRef}
+                  key={items.title}
+                  onClick={handleColumnFilter}
+                  className="cursor-pointer btn btn-ghost items-start text-base">
+                  {items.title}
+                </li>
+              ))}
+            </>
+          )}
         </Dropdown.Content>
       </Dropdown>
       ;

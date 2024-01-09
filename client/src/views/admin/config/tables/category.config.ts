@@ -2,7 +2,6 @@ import tableUtils from "@/utils/table.utils";
 import { TableStructProps } from "../../interface/table";
 import {
   Expenses,
-  Products,
   Purchase,
   Quotas,
   Sales,
@@ -12,28 +11,11 @@ import {
 } from "../../interface/model";
 import { User } from "@/interface/user";
 
-const productTable: TableStructProps<Products> = {
-  base: "products",
-  name: "products-table",
-  columns: tableUtils.columnGenerator<Products>({
-    invalidateKey: ["products"],
-    options: [
-      { name: "productImg", header: "Image", isFirst: true },
-      { name: "category", header: "Category" },
-      { name: "code", header: "Code", isBadge: true },
-      { name: "name", header: "Name" },
-      { name: "cost", header: "Cost" },
-      { name: "price", header: "Price" },
-      { name: "quantity", header: "Quantity" },
-      { name: "_id", header: "Action", isLast: true },
-    ],
-  }),
-};
-
 const stocksManagementTable: TableStructProps<StocksManagement> = {
   base: "stocks",
   name: "stocks-table",
   columns: tableUtils.columnGenerator<StocksManagement>({
+    configFn: () => {},
     invalidateKey: ["stocks"],
     options: [
       { name: "date", header: "Date", isFirst: true },
@@ -49,6 +31,7 @@ const stocksManagementAdjustment: TableStructProps<StocksManagementAdjustment> =
     base: "stocks",
     name: "stocks-table",
     columns: tableUtils.columnGenerator<StocksManagementAdjustment>({
+      configFn: () => {},
       invalidateKey: ["stocks"],
       options: [
         { name: "name", header: "Image", isFirst: true },
@@ -65,6 +48,7 @@ const quotasTable: TableStructProps<Quotas> = {
   base: "quotas",
   name: "quotas-table",
   columns: tableUtils.columnGenerator<Quotas>({
+    configFn: () => {},
     invalidateKey: ["quotas"],
     options: [
       { name: "date", header: "Date", isFirst: true },
@@ -81,6 +65,7 @@ const purchaseTable: TableStructProps<Purchase> = {
   base: "purchase",
   name: "purchase-table",
   columns: tableUtils.columnGenerator<Purchase>({
+    configFn: () => {},
     invalidateKey: ["purchase"],
     options: [
       { name: "refrence", header: "Reference", isFirst: true },
@@ -99,6 +84,7 @@ const purchaseTableReturn: TableStructProps<Purchase> = {
   base: "purchase-return",
   name: "purchase-return-table",
   columns: tableUtils.columnGenerator<Purchase>({
+    configFn: () => {},
     invalidateKey: ["purchase-return"],
     options: [
       { name: "refrence", header: "Reference", isFirst: true },
@@ -117,6 +103,7 @@ const salesTable: TableStructProps<Sales> = {
   base: "sales",
   name: "sales-table",
   columns: tableUtils.columnGenerator<Sales>({
+    configFn: () => {},
     invalidateKey: ["sales"],
     options: [
       { name: "date", header: "Date", isFirst: true },
@@ -136,6 +123,7 @@ const saleReturnTable: TableStructProps<SalesReturn> = {
   base: "sales-return",
   name: "sales-return-table",
   columns: tableUtils.columnGenerator<SalesReturn>({
+    configFn: () => {},
     invalidateKey: ["sales-return"],
     options: [
       { name: "date", header: "Date", isFirst: true },
@@ -155,6 +143,7 @@ const expensesTable: TableStructProps<Expenses> = {
   base: "expenses",
   name: "expenses-table",
   columns: tableUtils.columnGenerator<Expenses>({
+    configFn: () => {},
     invalidateKey: ["expenses"],
     options: [
       { name: "date", header: "Date", isFirst: true },
@@ -171,6 +160,7 @@ const userTable: TableStructProps<User> = {
   base: "users",
   name: "users-table",
   columns: tableUtils.columnGenerator<User>({
+    configFn: () => {},
     invalidateKey: ["users"],
     options: [
       { name: "userName", header: "User Name", isFirst: true },
@@ -182,7 +172,6 @@ const userTable: TableStructProps<User> = {
 };
 
 export default {
-  productTable,
   stocksManagementTable,
   stocksManagementAdjustment,
   quotasTable,

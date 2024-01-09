@@ -3,7 +3,6 @@ import Button from "@/components/Button";
 import FlexStack from "@/components/FlexStack";
 import DeleteModal from "@/containers/Modals/DeleteModal";
 import { ActionProps } from "@/interface/component";
-import usersApi from "@/service/api/users.api";
 import {
   deleteModalInstnace,
   setModalState,
@@ -22,7 +21,7 @@ const Action = <T,>({ id, payload, ...props }: ActionProps<T>) => {
   const UID: string | undefined = (payload.row.original as { _id: string })._id;
 
   const deleteMutation = queryUtils.mutation<DeleteProps>({
-    mutationFn: ({ id }) => usersApi.deleteUserById(id),
+    mutationFn: ({ id }) => props.configFn(id),
     toast: "Deleted Successfully",
     invalidateKey: props.invalidateKey,
 

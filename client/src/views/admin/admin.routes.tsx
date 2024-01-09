@@ -2,11 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import AdminEntryPoint from ".";
 import NotFound from "../utils/NotFound";
 import DashboardScreen from "./modules/dashboard";
-import ProductScreen from "./modules/products";
-import ProductTable from "./modules/products/screen/ProductTable";
-import ProductCategory from "./modules/products/screen/ProductCategory";
-import ProductCreate from "./modules/products/screen/ProductCreate";
-import ProductCategoryCreate from "./modules/products/screen/ProductCategoryCreate";
 import StocksManagementScreen from "./modules/stocks";
 import StocksManagementTable from "./modules/stocks/screen/StocksManagementTable";
 import StockManagementTableAdjustment from "./modules/stocks/screen/StocksManagementAdjust";
@@ -16,9 +11,7 @@ import SupplierCreate from "./modules/supplier/screen/SupplierCreate";
 import QuotasScreen from "./modules/quotas";
 import QuotasCreate from "./modules/quotas/screen/QuotasCreate";
 import QuotasTable from "./modules/quotas/screen/QuotasTable";
-import PurchaseScreen from "./modules/purchase";
-import PurchaseTable from "./modules/purchase/screen/PurchaseTable";
-import PurchaseCreate from "./modules/purchase/screen/PurchaseCreate";
+
 import SalesScreen from "./modules/sales";
 import SalesTable from "./modules/sales/screen/SalesTable";
 import SalesCreate from "./modules/sales/screen/SalesCreate";
@@ -31,6 +24,8 @@ import PurchaseReturnTable from "./modules/purchase/screen/PurchaseReturnTable";
 import ProfitLoss from "./modules/reports/screen/ProfitLoss";
 import PaymentTable from "./modules/reports/screen/Payment";
 import TOS from "./modules/reports/screen/TOS";
+
+import productRoutes from "./modules/products/product.routes";
 import userRoutes from "./modules/users/user.routes";
 
 const adminRoutes = createBrowserRouter([
@@ -40,19 +35,6 @@ const adminRoutes = createBrowserRouter([
     element: <AdminEntryPoint />,
     children: [
       { path: "/", element: <DashboardScreen /> },
-      {
-        path: "/products",
-        element: <ProductScreen />,
-        children: [
-          { path: "/products", element: <ProductTable /> },
-          { path: "/products/category", element: <ProductCategory /> },
-          {
-            path: "/products/category/create",
-            element: <ProductCategoryCreate />,
-          },
-          { path: "/products/create", element: <ProductCreate /> },
-        ],
-      },
 
       {
         path: "/stocks",
@@ -81,14 +63,6 @@ const adminRoutes = createBrowserRouter([
         children: [
           { path: "/quotas", element: <QuotasTable /> },
           { path: "/quotas/create", element: <QuotasCreate /> },
-        ],
-      },
-      {
-        path: "/purchase",
-        element: <PurchaseScreen />,
-        children: [
-          { path: "/purchase", element: <PurchaseTable /> },
-          { path: "/purchase/create", element: <PurchaseCreate /> },
         ],
       },
 
@@ -125,6 +99,7 @@ const adminRoutes = createBrowserRouter([
         ],
       },
       userRoutes,
+      productRoutes,
     ],
   },
 ]);
