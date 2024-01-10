@@ -8,7 +8,7 @@ import Select from "@/components/Select";
 import TableHeader from "@/components/Table/parts/TableHeader";
 import Text from "@/components/Text";
 import queryUtils from "@/utils/query.utils";
-import { ProductCategory, Products } from "../../index";
+import { ProductCategory, Products } from "../../product";
 import modelValidation from "@/views/admin/validation/model.validation";
 import { useRef, useState } from "react";
 import productCategoryApi from "../../api/productCategory.api";
@@ -22,7 +22,7 @@ const ProductCreate = () => {
   const [selectedImg, setSelectedImg] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const refrenceCode = generateCode();
+  const refrenceCode = "PD-" + generateCode().id;
 
   const mutation = queryUtils.mutation({
     mutationFn: async (payload: Products) => await productsApi.create(payload),
@@ -44,8 +44,8 @@ const ProductCreate = () => {
     const payload = data?.payload;
 
     return payload?.map((fields: ProductCategory) => ({
-      title: fields.code,
-      value: fields._id,
+      title: fields.name,
+      value: fields.code,
     }));
   };
 
@@ -94,7 +94,7 @@ const ProductCreate = () => {
 
   return (
     <div className="overflow-hidden">
-      <TableHeader title="Create Product" current=""></TableHeader>
+      <TableHeader title="Create Product" current="/products"></TableHeader>
 
       <Container className="my-8 mx-auto border-t border-gray-300 py-4">
         <Form<Products>
@@ -149,7 +149,8 @@ const ProductCreate = () => {
               title="Code"
               placeholder="Enter Category Code"
               required
-              default={`product-${refrenceCode.id}`}
+              default={refrenceCode}
+              disabled={true}
             />
 
             <Field

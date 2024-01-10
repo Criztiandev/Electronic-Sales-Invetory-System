@@ -1,44 +1,16 @@
-import * as path from "path";
-import * as fs from "fs";
 import asyncHandler from "express-async-handler";
 import userModel from "../users/user.model.ts";
 import { Request, Response } from "express";
 import { validatePaginationOptions } from "../../utils/api.utils.ts";
 import { AdminRequest } from "../../interfaces/server.js";
-import { productCategoryModel, productModel } from "./product.model.ts";
-import { publicFolder } from "../../utils/fs.utils.ts";
+import model from "./quotas.model.ts";
 
 export default {
   create: asyncHandler(async (req: AdminRequest, res: Response) => {
-    if (req.file) {
-      req.body.productsImg = req.file.filename;
-    }
-
-    const product = await productModel
-      .findOne({ code: req.body.code })
-      .lean()
-      .select("_id");
-    if (product) throw new Error("Product already exist");
-
-    if (req.body?.category) {
-      const categories = await productCategoryModel.findOne({
-        code: req.body.category,
-      });
-
-      // update the category count by 1
-      const _updated = await productCategoryModel
-        .findOneAndUpdate(
-          { code: req.body.category },
-          { count: categories.count + 1 },
-          { new: true }
-        )
-        .lean()
-        .select("_id");
-      if (!_updated) throw new Error("Something went wrong");
-    }
-
-    const payload = await productModel.create(req.body);
+    const payload = await model.create(req.body);
     if (!payload) throw new Error("Something went wrong");
+
+    console.log("Create", payload);
 
     res.status(201).json({
       payload: payload._id,
@@ -52,10 +24,10 @@ export default {
       filter = {},
     } = validatePaginationOptions(req.query);
 
-    const totalItems = await productModel.countDocuments({});
+    const totalItems = await model.countDocuments({});
     const totalPages = Math.ceil(totalItems / 10);
 
-    const payload = await productModel
+    const payload = await model
       .find(filter)
       .skip(size * index)
       .limit(size)
@@ -72,7 +44,7 @@ export default {
   fetchById: asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const user = await productModel.findById(id).lean().select("-__v");
+    const user = await model.findById(id).lean().select("-__v");
     if (!user) throw new Error("User doest exist");
 
     res.status(200).json({
@@ -87,23 +59,10 @@ export default {
       req.body.productsImg = req.file.filename;
     }
 
-    const payload = await productModel
-      .findById(id)
-      .lean()
-      .select("_id productsImg");
+    const payload = await model.findById(id).lean().select("_id productsImg");
     if (!payload) throw new Error("Product doesnt exist");
 
-    if (req.body.productsImg && req.file) {
-      // check if the image exist
-      const filePath = publicFolder("products/" + payload?.productsImg);
-      const oldProfileExists = fs.existsSync(filePath);
-
-      if (oldProfileExists) {
-        fs.unlinkSync(filePath);
-      }
-    }
-
-    const _updated = await productModel
+    const _updated = await model
       .findByIdAndUpdate(id, req.body, {
         new: true,
       })
@@ -120,36 +79,11 @@ export default {
   deleteById: asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const payload = await productModel
-      .findById(id)
-      .lean()
-      .select("_id productsImg");
+    const payload = await model.findById(id).lean().select("_id productsImg");
     if (!payload) throw new Error("User doest exist");
 
     try {
-      // check if the image exist
-      const filePath = publicFolder("products/" + payload?.productsImg);
-      const oldProfileExists = fs.existsSync(filePath);
-      if (oldProfileExists) {
-        fs.unlinkSync(filePath);
-      }
-
-      if (payload?.category) {
-        const categories = await productCategoryModel.findById(
-          payload?.category
-        );
-        const _updated = await productCategoryModel
-          .findByIdAndUpdate(
-            payload?.category,
-            { count: categories.count - 1 },
-            { new: true }
-          )
-          .lean()
-          .select("_id");
-        if (!_updated) throw new Error("Something went wrong");
-      }
-
-      const credentials = await productModel.deleteOne({ _id: id });
+      const credentials = await model.deleteOne({ _id: id });
       if (credentials.deletedCount !== 1)
         throw new Error("Document not found or not deleted.");
       res.status(200).json({

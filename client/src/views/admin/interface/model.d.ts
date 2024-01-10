@@ -1,21 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export interface StocksManagement {
-  _id?: string;
-  date: string;
-  reference: string;
-  products: string;
-}
-
-export interface StocksManagementAdjustment {
-  _id?: string;
-  name: string;
-  code: string;
-  stock: string;
-  quantity: string;
-  type: string;
-}
-
 export interface Quotas {
   _id?: string;
   date: string;

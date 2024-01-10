@@ -1,19 +1,20 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Table from "@/components/Table";
-import tableConfig from "@/views/admin/config/tables/files.config";
-import { StocksManagement } from "@/views/admin/interface/model";
 import { Link } from "react-router-dom";
-const StockManagementTable = () => {
-  const { name, base, columns } = tableConfig.StocksManagementTable;
+import filesConfig from "@/views/admin/config/tables/files.config";
+import { StocksManagement } from "../stocks";
+
+const StocksTable = () => {
+  const { name, base, columns } = filesConfig.StocksManagementTable;
 
   return (
     <Container>
       <Table>
         {/* Table Header */}
-        <Table.Header title="Stocks Management" current={`/${base}`}>
+        <Table.Header title="Stocks" current={`/${base}`}>
           <Container className="flex gap-4">
-            <Link to={"adjustment"}>
+            <Link to={"create"}>
               <Button title="Create" icon="T" dir="left" />
             </Link>
           </Container>
@@ -25,4 +26,4 @@ const StockManagementTable = () => {
   );
 };
 
-export default StockManagementTable;
+export default StocksTable;

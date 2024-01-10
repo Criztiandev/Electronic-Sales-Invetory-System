@@ -4,10 +4,7 @@ import { ProductSchema } from "./products.js";
 const productSchema = new mongoose.Schema<ProductSchema>(
   {
     productsImg: { type: String, default: "" },
-    category: {
-      type: String,
-      require: true,
-    },
+    category: { type: String, require: true },
     code: { type: String, require: true, unique: true },
     name: { type: String, require: true },
     cost: { type: Number, require: true },

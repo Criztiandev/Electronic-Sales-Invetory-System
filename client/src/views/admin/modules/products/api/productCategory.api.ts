@@ -6,7 +6,12 @@ const base = "products-category";
 
 export default {
   create: async (payload: ProductCategory) => {
-    return await apiUtils.privateAxios().post(`/${base}/create`, payload);
+    try {
+      return await apiUtils.privateAxios().post(`/${base}/create`, payload);
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
   },
 
   fetchAll: async () => {

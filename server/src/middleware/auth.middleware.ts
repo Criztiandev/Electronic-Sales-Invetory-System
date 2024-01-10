@@ -40,7 +40,6 @@ export default {
       res: ProtectedResponse,
       next: NextFunction
     ) => {
-      console.log("payload in auth", req.body);
       if (!req.cookies) throw new Error("No Cookies");
 
       const { accessToken, refreshToken } = req.cookies;
@@ -76,6 +75,10 @@ export default {
           newToken,
           process.env.JWT_SECRET
         ).payload;
+
+        console.log("Role", payload?.role);
+        console.log("payload in authenticateUser", req.body);
+
         return next();
       } else {
         req[result?.payload?.role] = result?.payload;

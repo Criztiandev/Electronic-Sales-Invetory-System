@@ -14,6 +14,8 @@ import userRoute from "./modules/users/user.routes.ts";
 import productRoute from "./modules/products/product.routes.ts";
 import productCategoryRoute from "./modules/products/category/productCategory.routes.ts";
 import supplierRoutes from "./modules/supplier/supplier.routes.ts";
+import stocksRoute from "./modules/stocks/stocks.routes.ts";
+import quotasRoute from "./modules/quotas/quotas.routes.ts";
 
 // user routes
 import orderRoute from "./modules/order/order.routes.ts";
@@ -57,8 +59,11 @@ app.use(
   productCategoryRoute
 );
 app.use("/api/supplier", [authenticateUser, requireAdmin], supplierRoutes);
-
+app.use("/api/stocks", [authenticateUser, requireAdmin], stocksRoute);
 app.use("/api/account", [authenticateUser, requireAdmin], accountRoute);
+app.use("/api/quotas", [authenticateUser, requireAdmin], quotasRoute);
+
+/// error Handler
 app.use(notFound);
 app.use(errorHandler);
 

@@ -68,7 +68,7 @@ const ProductEdit = () => {
 
       setTimeout(() => {
         imageQuery.refetch();
-      }, 100);
+      }, 250);
       clearForm();
     },
   });
@@ -76,14 +76,15 @@ const ProductEdit = () => {
   // Functions
   const convertToCategoryOption = (data: any) =>
     data?.payload?.map((fields: ProductCategory) => ({
-      title: fields.code,
-      value: fields._id,
+      title: fields.name,
+      value: fields.name,
     }));
 
   const toggleFileInput = () => fileInputRef.current?.click();
 
   const handlePreSaveImg = () => {
     const file = fileInputRef.current?.files?.[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -180,6 +181,7 @@ const ProductEdit = () => {
               title="Code"
               placeholder="Enter Category Code"
               required
+              disabled={true}
             />
 
             <Field

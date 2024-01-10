@@ -1,13 +1,28 @@
-import SupplierScreen from ".";
+import withTableFetching from "@/hoc/withTableFetching.hoc";
+import QuotasCreate from "./screen/QuotasCreate";
+import QuotasScreen from ".";
+import QuotasTable from "./screen/QuotasTable";
+import categoryConfig from "../../config/tables/category.config";
+import quotasApi from "./api/quotas.api";
+import QuotasDetails from "./screen/QuotasDetails";
+import QuotasEdit from "./screen/QuotasEdit";
+
+const DynamicQuotaTable = withTableFetching(
+  QuotasTable,
+  categoryConfig.quotasTable
+);
 
 const routes = {
-  path: "/supplier",
-  element: <SupplierScreen />,
+  path: "/quotas",
+  element: <QuotasScreen />,
   children: [
-    { path: "/supplier", element: <div></div> },
-    { path: "/supplier/:id", element: <div></div> },
-    { path: "/supplier/create", element: <div></div> },
-    { path: "/supplier/edit/:id", element: <div></div> },
+    {
+      path: "/quotas",
+      element: <DynamicQuotaTable fetchFn={quotasApi.fetchAll} />,
+    },
+    { path: "/quotas/:id", element: <QuotasDetails /> },
+    { path: "/quotas/create", element: <QuotasCreate /> },
+    { path: "/quotas/edit/:id", element: <QuotasEdit /> },
   ],
 };
 

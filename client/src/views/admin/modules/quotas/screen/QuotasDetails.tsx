@@ -10,29 +10,41 @@ import categoryConfig from "@/views/admin/config/tables/category.config";
 import GridStack from "@/components/GridStack";
 import Select from "@/components/Select";
 import { useQuery } from "@tanstack/react-query";
-import productsApi from "../../products/api/products.api";
-import { generateCode } from "@/utils/file.utils";
+import ProductViewer from "../containers/ProductViewer";
 import quotasValidation from "../quotas.validation";
 import Textarea from "@/components/Textarea";
-import supplierApi from "../../supplier/api/supplier.api";
 import quotasApi from "../api/quotas.api";
+import LoadingScreen from "@/views/utils/LoadingScreen";
+import { useParams } from "react-router-dom";
+
+interface SelectProductTable {
+  _id?: string;
+  name?: string;
+  netUnitPrice?: number;
+  stocks?: number;
+  quantity?: number;
+  discount?: number;
+  tax: number;
+  subtotal?: number;
+  total?: number;
+}
 
 const { base } = categoryConfig.quotasTable;
 
-const QuotasCreate = () => {
-  const QID = "QT-" + generateCode().id;
+const QuotasDetails = () => {
+  const { id } = useParams();
 
-  const productQuery = useQuery({
-    queryFn: async () => await productsApi.fetchAll(),
-    queryKey: ["products-list"],
+  const quotasQuery = useQuery({
+    queryFn: async () => await quotasApi.fetchAll(),
+    queryKey: [`quotas-list`],
+    enabled: !!id,
   });
 
-  const customerQuery = useQuery({
-    queryFn: async () => await supplierApi.fetchAll(),
-    queryKey: ["supplier-list"],
+  const quotaQueryDetails = useQuery({
+    queryFn: async () => await quotasApi.fetchById(id || ""),
+    queryKey: [`quotas-${id}`],
+    enabled: !!id,
   });
-
-  quotasApi;
 
   const mutation = queryUtils.mutation({
     mutationFn: async (payload: Quotas) => await quotasApi.create(payload),
@@ -40,61 +52,63 @@ const QuotasCreate = () => {
     toast: "Quotas Created Successfully",
   });
 
-  const handleConvertToOption = (data: any) => {
-    const payload = data?.payload;
-
-    return payload?.map((fields: any) => ({
-      title: fields.name,
-      value: fields.name,
-    }));
-  };
-
   const handleSubmit = (payload: Quotas) => {
     mutation.mutate(payload);
   };
 
+  if (quotasQuery?.isLoading || quotasQuery?.isError) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div>
       <TableHeader
-        title="Create Quotas"
+        title="Quotas Views"
         current={`/${base}`}
         options={[{ title: "Create", path: `/${base}/create` }]}></TableHeader>
       <Container className="my-8 mx-auto border-t border-gray-300 py-4">
-        <div className="w-[500px] h-[350px] border rounded-[5px]  mx-auto p-4 m-4 mb-8 shadow-lg"></div>
+        <ProductViewer selectedProduct={quotasQuery.data?.payload} />
 
         <Form<Quotas>
           onSubmit={handleSubmit}
           validation={quotasValidation as any}>
-          <GridStack columns={2}>
-            <Select
-              title="Products"
-              name="product"
-              placeholder="Select Products"
-              option={handleConvertToOption(productQuery.data)}
+          <GridStack columns={2} className="mb-8">
+            <Field
+              default={quotaQueryDetails?.data?.payload?.tax}
+              type="text"
+              name="tax"
+              title="Tax"
             />
             <Field
+              default={quotaQueryDetails?.data?.payload?.netUnitPrice}
               type="text"
-              name="reference"
-              title="Reference"
-              default={QID}
-              disabled
+              name="netUnitPrice"
+              title="Net Unity Price"
             />
-            <Select
-              title="Customer"
-              name="customer"
-              placeholder="Select Customer"
-              option={handleConvertToOption(customerQuery.data)}
+            <Field
+              default={quotaQueryDetails?.data?.payload?.stocks}
+              type="text"
+              name="stocks"
+              title="Stocks"
             />
-            <Field type="date" name="date" title="Date" />
-          </GridStack>
-
-          <GridStack columns={2} className="mb-8">
-            <Field type="text" name="tax" title="Tax" />
-            <Field type="text" name="netUnitPrice" title="Net Unity Price" />
-            <Field type="text" name="stocks" title="Stocks" />
-            <Field type="text" name="quantity" title="Quantity" />
-            <Field type="text" name="discount" title="Discount" />
-            <Field type="text" name="shipping" title="Shipping" />
+            <Field
+              default={quotaQueryDetails?.data?.payload?.quantity}
+              type="text"
+              name="quantity"
+              title="Quantity"
+            />
+            <Field
+              default={quotaQueryDetails?.data?.payload?.discount}
+              type="text"
+              name="discount"
+              title="Discount"
+            />
+            <Field
+              default={quotaQueryDetails?.data?.payload?.shipping}
+              type="text"
+              name="shipping"
+              title="Shipping"
+            />
             <Select
               title="Status"
               name="status"
@@ -106,12 +120,11 @@ const QuotasCreate = () => {
               ]}
             />
           </GridStack>
-          <Textarea title="Description" name="description" className="" />
 
           <Container className="flex justify-end items-center gap-4 my-8 flex-col ">
             <Button
               className="w-full hover:btn-success hover:text-white"
-              title="Create"
+              title="Update"
               type="submit"
             />
             <Button
@@ -126,4 +139,4 @@ const QuotasCreate = () => {
   );
 };
 
-export default QuotasCreate;
+export default QuotasDetails;

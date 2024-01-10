@@ -1,15 +1,12 @@
 import tableUtils from "@/utils/table.utils";
 import { TableStructProps } from "../../interface/table";
+import { Expenses, Purchase, Sales, SalesReturn } from "../../interface/model";
+import { User } from "@/interface/user";
 import {
-  Expenses,
-  Purchase,
-  Quotas,
-  Sales,
-  SalesReturn,
   StocksManagement,
   StocksManagementAdjustment,
-} from "../../interface/model";
-import { User } from "@/interface/user";
+} from "../../modules/stocks/stocks";
+import { Quotas } from "../../modules/quotas/quotas";
 
 const stocksManagementTable: TableStructProps<StocksManagement> = {
   base: "stocks",
@@ -51,8 +48,8 @@ const quotasTable: TableStructProps<Quotas> = {
     configFn: () => {},
     invalidateKey: ["quotas"],
     options: [
-      { name: "date", header: "Date", isFirst: true },
-      { name: "refrence", header: "Reference" },
+      { name: "reference", header: "Reference", isFirst: true },
+      { name: "date", header: "Date", isDate: true },
       { name: "customer", header: "Customer" },
       { name: "status", header: "Status", isBadge: true },
       { name: "total", header: "Total" },

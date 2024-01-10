@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const StocksManagementScreen = () => {
+const SupplierScreen = () => {
   return (
     <section className="px-[32px] py-8">
       <Outlet />
@@ -8,4 +8,4 @@ const StocksManagementScreen = () => {
   );
 };
 
-export default StocksManagementScreen;
+export default SupplierScreen;

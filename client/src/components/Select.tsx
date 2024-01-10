@@ -11,7 +11,7 @@ interface Options {
 interface Props {
   title: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   option: Array<Options>;
   className?: string;
   default?: string | number;

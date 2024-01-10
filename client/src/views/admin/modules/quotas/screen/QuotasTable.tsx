@@ -1,9 +1,10 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Table from "@/components/Table";
-import categoryConfig from "@/views/admin/config/tables/category.config";
-import { Quotas } from "@/views/admin/interface/model";
 import { Link } from "react-router-dom";
+import categoryConfig from "@/views/admin/config/tables/category.config";
+import { Quotas } from "../quotas";
+
 const QuotasTable = () => {
   const { name, base, columns } = categoryConfig.quotasTable;
 

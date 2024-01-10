@@ -6,7 +6,6 @@ const files = {
   productCategory: z.object({
     code: z.string().min(3, "Too Short").max(24, "Too Long"),
     name: z.string().min(3, "Too Short").max(64, "Too Long"),
-    count: z.string().min(1, "Too Short").max(64, "Too Long"),
   }),
 
   product: z.object({

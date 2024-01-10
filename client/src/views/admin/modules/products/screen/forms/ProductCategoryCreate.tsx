@@ -9,9 +9,12 @@ import queryUtils from "@/utils/query.utils";
 import productCategoryApi from "../../api/productCategory.api";
 import filesConfig from "@/views/admin/config/tables/files.config";
 import { ProductCategory } from "../../product";
+import { generateCode } from "@/utils/file.utils";
 
 const ProductCategoryCreate = () => {
   const { base } = filesConfig.productCategory;
+
+  const categoryCode = "category-" + generateCode().id;
 
   const mutation = queryUtils.mutation({
     mutationFn: async (payload: ProductCategory) =>
@@ -21,6 +24,7 @@ const ProductCategoryCreate = () => {
   });
 
   const handleSubmit = (payload: ProductCategory) => {
+    console.log(payload);
     mutation.mutate(payload);
   };
 
@@ -39,7 +43,13 @@ const ProductCategoryCreate = () => {
           onSubmit={handleSubmit}
           validation={modelValidation.files.productCategory}>
           <FlexStack gap={28} className="mb-4">
-            <Field name="code" title="Code" placeholder="Enter Category Code" />
+            <Field
+              default={categoryCode}
+              name="code"
+              title="Code"
+              placeholder="Enter Category Code"
+              disabled={true}
+            />
 
             <Field name="name" title="Name" placeholder="Enter Category Code" />
           </FlexStack>

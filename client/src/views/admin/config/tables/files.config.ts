@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import tableUtils from "@/utils/table.utils";
-import {
-  StocksManagement,
-  StocksManagementAdjustment,
-} from "../../interface/model";
+
 import { TableStructProps } from "../../interface/table";
 import productCategoryApi from "../../modules/products/api/productCategory.api";
 import productsApi from "../../modules/products/api/products.api";
 import { ProductCategory, Products } from "../../modules/products/product";
 import { Supplier } from "../../modules/supplier/supplier";
 import supplierApi from "../../modules/supplier/api/supplier.api";
+import { StocksManagement } from "../../modules/stocks/stocks";
+import stocksApi from "../../modules/stocks/api/stocks.api";
 
 const productTable: TableStructProps<Products> = {
   base: "products",
@@ -55,33 +54,19 @@ const StocksManagementTable: TableStructProps<StocksManagement> = {
   base: "stocks",
   name: "stocks-table",
   columns: tableUtils.columnGenerator<StocksManagement>({
-    configFn: () => {},
+    configFn: () => stocksApi.deleteById,
     invalidateKey: ["stocks"],
     options: [
       { name: "date", header: "Date", isFirst: true },
-      { name: "products", header: "Products" },
-      { name: "reference", header: "Reference", isBadge: true },
+      { name: "productName", header: "Product Name" },
+      { name: "code", header: "Category" },
+      { name: "stocks", header: "Stocks", isBadge: true },
+      { name: "quantity", header: "Quantity" },
+      { name: "type", header: "Type" },
       { name: "_id", header: "Action", isLast: true },
     ],
   }),
 };
-const StocksManagementAdjustment: TableStructProps<StocksManagementAdjustment> =
-  {
-    base: "stocks",
-    name: "stocks-table",
-    columns: tableUtils.columnGenerator<StocksManagementAdjustment>({
-      configFn: () => {},
-      invalidateKey: ["stocks"],
-      options: [
-        { name: "name", header: "Image", isFirst: true },
-        { name: "code", header: "Category" },
-        { name: "stock", header: "Stocks", isBadge: true },
-        { name: "quantity", header: "Quantity" },
-        { name: "type", header: "Type" },
-        { name: "_id", header: "Action", isLast: true },
-      ],
-    }),
-  };
 
 const supplierTable: TableStructProps<Supplier> = {
   base: "supplier",
@@ -103,5 +88,4 @@ export default {
   productCategory,
   supplierTable,
   StocksManagementTable,
-  StocksManagementAdjustment,
 };
