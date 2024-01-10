@@ -2,8 +2,8 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Table from "@/components/Table";
 import filesConfig from "@/views/admin/config/tables/files.config";
-import { ProductCategory } from "@/views/admin/interface/model";
 import { Link } from "react-router-dom";
+import { ProductCategory } from "../../product";
 
 const ProductCategory = () => {
   const { name, columns } = filesConfig.productCategory;

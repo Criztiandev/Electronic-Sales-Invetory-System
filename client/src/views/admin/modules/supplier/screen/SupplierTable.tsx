@@ -2,8 +2,8 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Table from "@/components/Table";
 import tableConfig from "@/views/admin/config/tables/files.config";
-import { Supplier } from "@/views/admin/interface/model";
 import { Link } from "react-router-dom";
+import { Supplier } from "../supplier";
 const SupplierTable = () => {
   const { name, base, columns } = tableConfig.supplierTable;
 

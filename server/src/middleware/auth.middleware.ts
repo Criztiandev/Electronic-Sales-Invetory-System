@@ -11,7 +11,6 @@ export default {
   requireUser: asyncHandler(
     async (req: UserRequest, res: Response, next: NextFunction) => {
       if (!req.user) {
-        // clear cookies
         tokenUtils.revokeCookies(res, "accessToken");
         tokenUtils.revokeCookies(res, "refreshToken");
         res.status(401);
@@ -24,6 +23,10 @@ export default {
   requireAdmin: asyncHandler(
     async (req: AdminRequest, res: Response, next: NextFunction) => {
       if (!req.admin) {
+        console.log("payload in admin", req.body);
+
+        tokenUtils.revokeCookies(res, "accessToken");
+        tokenUtils.revokeCookies(res, "refreshToken");
         res.status(401);
         throw new Error("Unauthorized, Your role is not Admin");
       }
@@ -37,6 +40,7 @@ export default {
       res: ProtectedResponse,
       next: NextFunction
     ) => {
+      console.log("payload in auth", req.body);
       if (!req.cookies) throw new Error("No Cookies");
 
       const { accessToken, refreshToken } = req.cookies;

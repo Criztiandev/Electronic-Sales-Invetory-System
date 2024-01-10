@@ -1,22 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface Products {
-  _id?: string;
-  productImg?: any;
-  code: string;
-  name: string;
-  category: string;
-  cost: any;
-  price: any;
-  quantity: any;
-}
-
-export interface ProductCategory {
-  _id?: string;
-  code: string;
-  name: string;
-  count?: string;
-  createdAt?: string;
-}
 
 export interface StocksManagement {
   _id?: string;
@@ -32,13 +14,6 @@ export interface StocksManagementAdjustment {
   stock: string;
   quantity: string;
   type: string;
-}
-
-export interface Supplier {
-  _id?: string;
-  name: string;
-  email: string;
-  phone: string;
 }
 
 export interface Quotas {

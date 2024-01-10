@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import apiUtils from "@/utils/api.utils";
-import { ProductCategory } from "@/views/admin/interface/model";
+import { ProductCategory } from "../product";
 
 const base = "products-category";
 

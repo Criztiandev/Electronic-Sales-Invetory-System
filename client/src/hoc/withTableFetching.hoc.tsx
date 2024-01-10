@@ -66,6 +66,7 @@ const withTableFetching = (
     }
 
     if (query.isSuccess) {
+      console.log(query.data);
       const { payload } = query.data;
       dispatch(setTableData({ id: config.name, data: payload }));
     }

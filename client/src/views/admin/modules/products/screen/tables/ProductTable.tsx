@@ -3,10 +3,10 @@ import Container from "@/components/Container";
 import Dropdown from "@/components/Dropdown";
 import Table from "@/components/Table";
 import filesConfig from "@/views/admin/config/tables/files.config";
-import { ProductCategory, Products } from "@/views/admin/interface/model";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import productCategoryApi from "../../api/productCategory.api";
+import { ProductCategory, Products } from "../../product";
 const ProductTable = () => {
   const { name, base, columns } = filesConfig.productTable;
 

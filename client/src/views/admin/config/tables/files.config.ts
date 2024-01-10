@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import tableUtils from "@/utils/table.utils";
 import {
-  ProductCategory,
-  Products,
   StocksManagement,
   StocksManagementAdjustment,
-  Supplier,
 } from "../../interface/model";
 import { TableStructProps } from "../../interface/table";
 import productCategoryApi from "../../modules/products/api/productCategory.api";
 import productsApi from "../../modules/products/api/products.api";
+import { ProductCategory, Products } from "../../modules/products/product";
+import { Supplier } from "../../modules/supplier/supplier";
+import supplierApi from "../../modules/supplier/api/supplier.api";
 
 const productTable: TableStructProps<Products> = {
   base: "products",
@@ -87,7 +87,7 @@ const supplierTable: TableStructProps<Supplier> = {
   base: "supplier",
   name: "supplier-table",
   columns: tableUtils.columnGenerator<Supplier>({
-    configFn: () => {},
+    configFn: () => supplierApi.deleteById,
     invalidateKey: ["supplier"],
     options: [
       { name: "name", header: "Name", isFirst: true },

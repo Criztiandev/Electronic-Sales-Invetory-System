@@ -6,9 +6,8 @@ import Form from "@/components/Form";
 import GridStack from "@/components/GridStack";
 import Select from "@/components/Select";
 import TableHeader from "@/components/Table/parts/TableHeader";
-import Text from "@/components/Text";
 import queryUtils from "@/utils/query.utils";
-import { ProductCategory, Products } from "@/views/admin/interface/model";
+import { ProductCategory, Products } from "../../product";
 import modelValidation from "@/views/admin/validation/model.validation";
 import { useRef, useState } from "react";
 import productCategoryApi from "../../api/productCategory.api";
@@ -66,7 +65,10 @@ const ProductEdit = () => {
     toast: "Product Updated Successfully",
     onSuccess: () => {
       query.refetch();
-      imageQuery.refetch();
+
+      setTimeout(() => {
+        imageQuery.refetch();
+      }, 100);
       clearForm();
     },
   });
@@ -128,32 +130,23 @@ const ProductEdit = () => {
           validation={modelValidation.files.product as any}>
           <div>
             <label className="w-[500px] h-[350px]  m-auto border rounded-[5px] mb-4 mt-2 p-4 flex justify-center items-center flex-col gap-4">
-              {imageQuery?.data && !selectedImg ? (
+              {selectedImg ? (
                 <>
                   <img
-                    src={imageQuery?.data as string}
+                    src={selectedImg}
                     className="w-full h-full object-cover rounded-[5px] cursor-pointer"
                   />
                 </>
               ) : (
                 <>
-                  {selectedImg ? (
-                    <img
-                      src={selectedImg}
-                      className="w-full h-full object-cover rounded-[5px] cursor-pointer"
-                    />
+                  {imageQuery?.isLoading && !selectedImg ? (
+                    <div className="skeleton w-full h-full"></div>
                   ) : (
-                    <>
-                      <Text as="span" className="text-[28px] font-bold">
-                        Drag and Drop here
-                      </Text>
-                      <span className="border-2 w-[350px] border-dashed border-gray-400 "></span>
-                      <Button
-                        title="Select here"
-                        type="button"
-                        onClick={toggleFileInput}
-                      />
-                    </>
+                    <img
+                      src={imageQuery.data as string}
+                      className="w-full h-full object-cover rounded-[5px] cursor-pointer"
+                      alt="product-img"
+                    />
                   )}
                 </>
               )}

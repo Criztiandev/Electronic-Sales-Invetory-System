@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import apiUtils from "@/utils/api.utils";
-import { Products } from "@/views/admin/interface/model";
-
+import { Products } from "../product";
 const base = "products";
 export default {
   create: async (payload: Products) =>

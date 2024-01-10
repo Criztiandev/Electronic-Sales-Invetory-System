@@ -8,7 +8,7 @@ import Select from "@/components/Select";
 import TableHeader from "@/components/Table/parts/TableHeader";
 import Text from "@/components/Text";
 import queryUtils from "@/utils/query.utils";
-import { ProductCategory, Products } from "@/views/admin/interface/model";
+import { ProductCategory, Products } from "../../index";
 import modelValidation from "@/views/admin/validation/model.validation";
 import { useRef, useState } from "react";
 import productCategoryApi from "../../api/productCategory.api";

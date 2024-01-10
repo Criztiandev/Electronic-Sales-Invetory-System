@@ -6,7 +6,7 @@ import Form from "@/components/Form";
 import GridStack from "@/components/GridStack";
 import Select from "@/components/Select";
 import TableHeader from "@/components/Table/parts/TableHeader";
-import { ProductCategory, Products } from "@/views/admin/interface/model";
+import { ProductCategory, Products } from "../../product";
 import modelValidation from "@/views/admin/validation/model.validation";
 import productCategoryApi from "../../api/productCategory.api";
 import { useQuery } from "@tanstack/react-query";

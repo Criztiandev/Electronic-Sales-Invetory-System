@@ -38,14 +38,20 @@ const FirstCell = <T,>(props: CellProps<T>) => {
       onDoubleClick={() => navigate(`${payload._id}`)}
       className="first-cell cursor-pointer flex items-center gap-4">
       <>
-        {payload?.profileImg && query.isLoading ? (
+        {query.isLoading ? (
           <div className="skeleton w-[24px] h-[24px] rounded-full shrink-0"></div>
         ) : (
-          <Avatar
-            src={query.data as string}
-            alt={`profile-${payload._id}`}
-            size="md"
-          />
+          <>
+            {payload?.[`${props.folder}Img`] && (
+              <>
+                <Avatar
+                  src={query.data as string}
+                  alt={`profile-${payload._id}`}
+                  size="md"
+                />
+              </>
+            )}
+          </>
         )}
       </>
 

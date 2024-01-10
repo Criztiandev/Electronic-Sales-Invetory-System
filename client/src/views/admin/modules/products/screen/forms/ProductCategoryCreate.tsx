@@ -1,4 +1,3 @@
-import { ProductCategory } from "@/views/admin/interface/model";
 import FlexStack from "@/components/FlexStack";
 import Form from "@/components/Form";
 import Field from "@/components/Field";
@@ -9,6 +8,7 @@ import TableHeader from "@/components/Table/parts/TableHeader";
 import queryUtils from "@/utils/query.utils";
 import productCategoryApi from "../../api/productCategory.api";
 import filesConfig from "@/views/admin/config/tables/files.config";
+import { ProductCategory } from "../../product";
 
 const ProductCategoryCreate = () => {
   const { base } = filesConfig.productCategory;
